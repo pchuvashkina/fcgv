@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thalassa — пляжное кафе в греческом стиле</title>
+  <meta name="description" content="Thalassa — пляжное кафе у Эгейского моря: средиземноморская кухня, лимонады, столики на веранде у воды, доставка.">
+  <meta name="theme-color" content="#2E5AA7">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%232E5AA7'/%3E%3Ccircle cx='16' cy='13' r='7' fill='%23FFA62B'/%3E%3Cpath d='M4 21q3-3 6 0t6 0 6 0 6 0' stroke='%23F8E6A0' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script type="module" src="/js/main.js"></script>
+</head>
+<body>
+  <!-- SVG-спрайт: лимон, звезда, меандр -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="lemon" viewBox="0 0 64 64">
+        <path d="M6 36C6 20 22 9 40 12c5-5 13-4 16 1-2 2-4 3-6 4 7 14-1 33-20 36-4 5-12 5-17 0 1-4 2-6 4-8-8-2-11-6-11-9z" fill="#FFA62B" stroke="#2E5AA7" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M17 24c5-6 13-9 21-8" stroke="#F8E6A0" stroke-width="3" stroke-linecap="round" fill="none" opacity=".8"/>
+        <path d="M48 12c2-6 8-9 14-8-1 6-6 10-14 8z" fill="#86C5FF" stroke="#2E5AA7" stroke-width="2.5" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z" fill="currentColor"/></symbol>
+      <pattern id="meander" width="24" height="18" patternUnits="userSpaceOnUse">
+        <path d="M0 15H24M21 15V3H6V12H15V6H12" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <a class="skip" href="#menu">К меню</a>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container site-header__in">
+      <a class="logo" href="#top" aria-label="Thalassa — на главную">
+        <svg class="logo__mark" viewBox="0 0 56 56" aria-hidden="true">
+          <circle cx="28" cy="25" r="15" fill="#FFA62B"/>
+          <g stroke="#FFA62B" stroke-width="2.4" stroke-linecap="round">
+            <path d="M28 2v4M6 25h4M46 25h4M12.5 9.5l3 3M43.5 9.5l-3 3"/>
+          </g>
+          <path d="M4 37q6-6 12 0t12 0 12 0 12 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M10 46q5-5 10 0t10 0 10 0 6 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+        </svg>
+        <span class="logo__text"><b>Thalassa</b><small>Θάλασσα · Beach Café</small></span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <a href="#about">О нас</a>
+        <a href="#menu">Меню</a>
+        <a href="#booking">Бронирование</a>
+        <a href="#delivery">Доставка</a>
+        <a href="#reviews">Отзывы</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="cartBtn" type="button" aria-label="Открыть корзину">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+          <span class="badge" id="cartBadge" hidden>0</span>
+        </button>
+        <div class="user-slot" id="userSlot"></div>
+        <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="hero__bg"><img data-img="hero" data-w="1800" alt="Белые домики и синее Эгейское море" fetchpriority="high" decoding="async"></div>
+      <div class="hero__shade"></div>
+      <svg class="hero__sun" viewBox="0 0 400 400" aria-hidden="true">
+        <g stroke="#FFA62B" stroke-width="5" stroke-linecap="round" opacity=".9">
+          <path id="rays" d="M200 10v40M200 350v40M10 200h40M350 200h40M65 65l28 28M307 307l28 28M335 65l-28 28M93 307l-28 28M105 24l16 36M295 376l-16-36M24 295l36-16M376 105l-36 16M295 24l-16 36M105 376l16-36M24 105l36 16M376 295l-36-16"/>
+        </g>
+        <circle cx="200" cy="200" r="92" fill="#FFA62B"/>
+      </svg>
+
+      <div class="container hero__content">
+        <p class="eyebrow eyebrow--light hero__eyebrow">Θάλασσα · Пляжное кафе у Эгейского моря</p>
+        <h1 class="hero__title" id="heroTitle" aria-label="Thalassa">Thalassa</h1>
+        <p class="hero__lead">Свежая рыба с углей, лимонады из греческих лимонов и закат прямо над вашим столиком.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg btn--magnetic" href="#menu">Смотреть меню</a>
+          <a class="btn btn--lg btn--ghost btn--magnetic" href="#booking">Забронировать столик</a>
+        </div>
+        <ul class="hero__facts">
+          <li><b>10:00 — 23:00</b><span>ежедневно</span></li>
+          <li><b>16 столиков</b><span>зал и веранда у воды</span></li>
+          <li><b>Доставка</b><span>по всему побережью</span></li>
+        </ul>
+      </div>
+
+      <svg class="lemon lemon--1" viewBox="0 0 64 64" aria-hidden="true"><use href="#lemon"/></svg>
+      <svg class="lemon lemon--2" viewBox="0 0 64 64" aria-hidden="true"><use href="#lemon"/></svg>
+      <svg class="lemon lemon--3" viewBox="0 0 64 64" aria-hidden="true"><use href="#lemon"/></svg>
+
+      <div class="waves" aria-hidden="true">
+        <svg class="waves__layer waves__layer--back" viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60c120-40 240-40 360 0s240 40 360 0c120-40 240-40 360 0s240 40 360 0c120-40 240-40 360 0s240 40 360 0c120-40 240-40 360 0s240 40 360 0V120H0z"/></svg>
+        <svg class="waves__layer waves__layer--front" viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 70c120-30 240-30 360 0s240 30 360 0c120-30 240-30 360 0s240 30 360 0c120-30 240-30 360 0s240 30 360 0c120-30 240-30 360 0s240 30 360 0V120H0z"/></svg>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Свежая рыба</span><i>✦</i><span>Лимоны Эгейского моря</span><i>✦</i><span>Оливковое масло первого отжима</span><i>✦</i><span>Греческий йогурт с мёдом</span><i>✦</i><span>Закат с видом на море</span><i>✦</i>
+        <span>Свежая рыба</span><i>✦</i><span>Лимоны Эгейского моря</span><i>✦</i><span>Оливковое масло первого отжима</span><i>✦</i><span>Греческий йогурт с мёдом</span><i>✦</i><span>Закат с видом на море</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ================= О НАС ================= -->
+    <section class="section about" id="about">
+      <div class="container about__grid">
+        <div class="about__media">
+          <div class="about__img about__img--a" data-parallax="0.10"><img data-img="about1" data-w="900" alt="Столики пляжного кафе с зонтами" loading="lazy" decoding="async"></div>
+          <div class="about__img about__img--b" data-parallax="-0.12"><img data-img="about2" data-w="700" alt="Накрытые столы у самой воды" loading="lazy" decoding="async"></div>
+          <div class="about__badge" data-reveal="zoom">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#lemon"/></svg>
+            <b>С 2012 года</b><span>на берегу моря</span>
+          </div>
+        </div>
+        <div class="about__text">
+          <p class="eyebrow" data-reveal>Η ιστορία μας</p>
+          <h2 class="h2" data-reveal>Кусочек Эгейского<br>на вашем <em>песке</em></h2>
+          <p data-reveal>Thalassa — это греческое слово «море». Мы открыли кафе на берегу бухты, где белый песок встречается с бирюзовой водой, а на кухне готовят так, как принято у рыбаков на островах: просто, щедро и очень свежо.</p>
+          <p data-reveal>Рыбу привозят утром, овощи — с соседних огородов, оливковое масло — с семейной давильни на Крите. А лимонад мы делаем из лимонов, которые растут прямо за верандой.</p>
+          <div class="stats" data-reveal>
+            <div><b data-count="12">0</b><span>лет у моря</span></div>
+            <div><b data-count="16">0</b><span>столиков</span></div>
+            <div><b data-count="20" data-suffix="+">0</b><span>блюд в меню</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= МЕНЮ ================= -->
+    <section class="section menu" id="menu">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">ΜΕΝΟΥ</p>
+          <h2 class="h2">Вкус <em>Средиземноморья</em></h2>
+          <p class="section__lead">Выберите блюда, добавьте в корзину — и мы привезём или подадим их к вашему столику.</p>
+        </header>
+        <div class="tabs" id="menuTabs" role="tablist" aria-label="Категории меню" data-reveal></div>
+        <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ===== Параллакс-полоса ===== -->
+    <section class="band" aria-label="Цитата">
+      <div class="band__bg" data-band><img data-img="band" data-w="1800" alt="" loading="lazy" decoding="async"></div>
+      <div class="band__shade"></div>
+      <blockquote class="container band__quote" data-reveal>
+        <span>«Где небо встречается с морем,<br>там мы накрываем стол»</span>
+      </blockquote>
+    </section>
+
+    <!-- ================= БРОНИРОВАНИЕ ================= -->
+    <section class="section section--tile booking" id="booking">
+      <div class="container">
+        <header class="section__head section__head--light" data-reveal>
+          <p class="eyebrow eyebrow--light">ΚΡΑΤΗΣΗ</p>
+          <h2 class="h2">Ваш столик у <em>воды</em></h2>
+          <p class="section__lead">Выберите дату, время и количество гостей — затем нажмите на свободный столик на схеме зала.</p>
+        </header>
+
+        <div class="booking__grid">
+          <div class="card card--map" data-reveal="left">
+            <div class="map" id="floorMap" role="group" aria-label="Схема зала и веранды"></div>
+            <div class="map-tip" id="mapTip" hidden></div>
+            <ul class="legend">
+              <li><i class="dot dot--free"></i>Свободен</li>
+              <li><i class="dot dot--sel"></i>Ваш выбор</li>
+              <li><i class="dot dot--busy"></i>Занят</li>
+              <li><i class="dot dot--small"></i>Мало мест</li>
+            </ul>
+          </div>
+
+          <form class="card booking__form" id="bookingForm" novalidate data-reveal="right">
+            <h3 class="h3">Бронирование</h3>
+            <div class="field-row">
+              <label class="field"><span>Дата</span><input type="date" id="bkDate" required></label>
+              <label class="field"><span>Время</span><select id="bkTime" required></select></label>
+              <label class="field"><span>Гостей</span><select id="bkGuests"></select></label>
+            </div>
+            <div class="chosen" id="chosenTable" aria-live="polite">Выберите столик на схеме</div>
+            <label class="field"><span>Ваше имя</span><input type="text" id="bkName" autocomplete="name" maxlength="60" required></label>
+            <label class="field"><span>Телефон</span><input type="tel" id="bkPhone" autocomplete="tel" maxlength="25" placeholder="+30 …" required></label>
+            <label class="field"><span>Пожелания (необязательно)</span><textarea id="bkComment" rows="2" maxlength="300" placeholder="Детское кресло, день рождения…"></textarea></label>
+            <p class="form-error" id="bkError" role="alert" hidden></p>
+            <button class="btn btn--block btn--lg" type="submit" id="bkSubmit">Забронировать</button>
+            <p class="form-note">Бронь удерживает столик 2 часа. После отправки администратор подтвердит её — статус виден в личном кабинете.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ДОСТАВКА ================= -->
+    <section class="section delivery" id="delivery">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">ΠΑΡΑΔΟΣΗ</p>
+          <h2 class="h2">Пляж у вас <em>дома</em></h2>
+          <p class="section__lead">Курьер привезёт горячие блюда и холодные напитки на виллу, в отель или на пляж.</p>
+        </header>
+        <ol class="steps">
+          <li class="step card" data-reveal><span class="step__n">1</span><h3>Выберите блюда</h3><p>Добавьте любимые позиции из меню в корзину.</p></li>
+          <li class="step card" data-reveal><span class="step__n">2</span><h3>Адрес и время</h3><p>Укажите адрес, телефон и удобное время — сегодня или завтра.</p></li>
+          <li class="step card" data-reveal><span class="step__n">3</span><h3>Курьер в пути</h3><p>Следите за статусом заказа в личном кабинете и оплатите курьеру.</p></li>
+        </ol>
+        <ul class="chips" data-reveal>
+          <li>Доставка <b id="cfgFee">3,50 €</b></li>
+          <li>Бесплатно от <b id="cfgFree">40,00 €</b></li>
+          <li>Минимальный заказ <b id="cfgMin">15,00 €</b></li>
+          <li>Ежедневно <b>11:00 — 22:00</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= ОТЗЫВЫ ================= -->
+    <section class="section section--sea reviews" id="reviews">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">ΚΡΙΤΙΚΕΣ</p>
+          <h2 class="h2">Что говорят <em>гости</em></h2>
+        </header>
+        <div class="reviews__layout">
+          <aside class="rating-card card" id="ratingCard" data-reveal="left"></aside>
+          <div class="review-list" id="reviewList"></div>
+        </div>
+
+        <form class="card review-form" id="reviewForm" novalidate data-reveal>
+          <h3 class="h3">Оставьте отзыв</h3>
+          <div class="star-input" id="starInput" role="radiogroup" aria-label="Оценка">
+            <input type="radio" name="rating" id="r5" value="5"><label for="r5" title="5"><svg viewBox="0 0 24 24"><use href="#star"/></svg></label>
+            <input type="radio" name="rating" id="r4" value="4"><label for="r4" title="4"><svg viewBox="0 0 24 24"><use href="#star"/></svg></label>
+            <input type="radio" name="rating" id="r3" value="3"><label for="r3" title="3"><svg viewBox="0 0 24 24"><use href="#star"/></svg></label>
+            <input type="radio" name="rating" id="r2" value="2"><label for="r2" title="2"><svg viewBox="0 0 24 24"><use href="#star"/></svg></label>
+            <input type="radio" name="rating" id="r1" value="1"><label for="r1" title="1"><svg viewBox="0 0 24 24"><use href="#star"/></svg></label>
+          </div>
+          <label class="field"><span>Ваши впечатления</span><textarea id="rvText" rows="4" minlength="10" maxlength="600" placeholder="Что понравилось больше всего?"></textarea></label>
+          <p class="form-error" id="rvError" role="alert" hidden></p>
+          <div class="review-form__foot">
+            <span class="form-note" id="rvHint"></span>
+            <button class="btn" type="submit">Отправить отзыв</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__meander" aria-hidden="true"><svg width="100%" height="18"><rect width="100%" height="18" fill="url(#meander)"/></svg></div>
+    <div class="container footer__grid">
+      <div>
+        <a class="logo logo--footer" href="#top" aria-label="Thalassa">
+          <svg class="logo__mark" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="25" r="15" fill="#FFA62B"/><path d="M4 37q6-6 12 0t12 0 12 0 12 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M10 46q5-5 10 0t10 0 10 0 6 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".65"/></svg>
+          <span class="logo__text"><b>Thalassa</b><small>Θάλασσα · Beach Café</small></span>
+        </a>
+        <p>Пляжное кафе в греческом стиле. Море, солнце и вкус Эгейских островов.</p>
+      </div>
+      <div>
+        <h4>Часы работы</h4>
+        <p>Ежедневно 10:00 — 23:00<br>Кухня до 22:30<br>Доставка 11:00 — 22:00</p>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <p>Пляж Афандоу, о. Родос<br>+30 22 4000 0000<br>hello@thalassa.gr</p>
+      </div>
+      <div>
+        <h4>Навигация</h4>
+        <p><a href="#menu">Меню</a> · <a href="#booking">Бронирование</a><br><a href="#delivery">Доставка</a> · <a href="#reviews">Отзывы</a></p>
+      </div>
+    </div>
+    <p class="footer__legal container">© 2026 Thalassa Beach Café · Учебный демо-проект: адрес и телефон вымышленные</p>
+  </footer>
+
+  <!-- ============ Диалоги ============ -->
+  <dialog class="dlg" id="authDlg" aria-labelledby="authTitle">
+    <div class="dlg__box">
+      <button class="dlg__close" type="button" data-close aria-label="Закрыть">×</button>
+      <h2 class="h3" id="authTitle">Добро пожаловать</h2>
+      <div class="seg" role="tablist">
+        <button type="button" class="seg__btn is-on" data-auth-tab="login" role="tab">Вход</button>
+        <button type="button" class="seg__btn" data-auth-tab="register" role="tab">Регистрация</button>
+      </div>
+
+      <form id="loginForm" class="stack" novalidate>
+        <label class="field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+        <label class="field"><span>Пароль</span><input type="password" name="password" autocomplete="current-password" required></label>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="btn btn--block" type="submit">Войти</button>
+      </form>
+
+      <form id="registerForm" class="stack" novalidate hidden>
+        <label class="field"><span>Имя</span><input type="text" name="name" autocomplete="name" maxlength="60" required></label>
+        <label class="field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+        <label class="field"><span>Телефон (необязательно)</span><input type="tel" name="phone" autocomplete="tel" maxlength="25"></label>
+        <label class="field"><span>Пароль</span><input type="password" name="password" autocomplete="new-password" minlength="8" required><small>Минимум 8 символов, буква и цифра</small></label>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="btn btn--block" type="submit">Создать аккаунт</button>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="drawer" id="cartDlg" aria-labelledby="cartTitle">
+    <div class="drawer__box" id="cartBox"></div>
+  </dialog>
+
+  <dialog class="panel" id="accountDlg" aria-labelledby="accTitle">
+    <div class="panel__box" id="accountBox"></div>
+  </dialog>
+
+  <dialog class="panel panel--wide" id="adminDlg" aria-labelledby="admTitle">
+    <div class="panel__box" id="adminBox"></div>
+  </dialog>
+
+  <dialog class="dlg" id="itemDlg" aria-labelledby="itemTitle">
+    <div class="dlg__box" id="itemBox"></div>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>
